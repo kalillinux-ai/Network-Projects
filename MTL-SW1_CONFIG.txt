@@ -1,0 +1,169 @@
+!
+version 12.2(37)SE1
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname MTL-SW1
+!
+!
+!
+!
+!
+!
+ip routing
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+no ip domain-lookup
+!
+!
+spanning-tree mode pvst
+spanning-tree vlan 100,200,300 priority 0
+!
+!
+!
+!
+!
+!
+interface FastEthernet0/1
+ switchport trunk allowed vlan 100,200,300
+!
+interface FastEthernet0/2
+ switchport trunk allowed vlan 100,200,300
+!
+interface FastEthernet0/3
+ switchport trunk allowed vlan 100,200,300
+!
+interface FastEthernet0/4
+ switchport trunk allowed vlan 100,200,300
+!
+interface FastEthernet0/5
+!
+interface FastEthernet0/6
+!
+interface FastEthernet0/7
+!
+interface FastEthernet0/8
+!
+interface FastEthernet0/9
+!
+interface FastEthernet0/10
+!
+interface FastEthernet0/11
+!
+interface FastEthernet0/12
+!
+interface FastEthernet0/13
+!
+interface FastEthernet0/14
+!
+interface FastEthernet0/15
+!
+interface FastEthernet0/16
+!
+interface FastEthernet0/17
+!
+interface FastEthernet0/18
+!
+interface FastEthernet0/19
+!
+interface FastEthernet0/20
+!
+interface FastEthernet0/21
+!
+interface FastEthernet0/22
+!
+interface FastEthernet0/23
+!
+interface FastEthernet0/24
+!
+interface GigabitEthernet0/1
+ no switchport
+ ip address 10.1.1.1 255.255.255.252
+ ip ospf network point-to-point
+ ip ospf priority 1
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/2
+ no switchport
+ ip address 10.2.2.1 255.255.255.252
+ ip ospf network point-to-point
+ ip ospf priority 1
+ duplex auto
+ speed auto
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+interface Vlan100
+ mac-address 00e0.b02b.3801
+ ip address 172.16.1.2 255.255.255.0
+ ip helper-address 10.0.0.10
+ standby 1 ip 172.16.1.1
+ standby 1 priority 110
+ standby 1 preempt
+!
+interface Vlan200
+ mac-address 00e0.b02b.3802
+ ip address 172.16.2.2 255.255.255.0
+ ip helper-address 10.0.0.10
+ standby 2 ip 172.16.2.1
+ standby 2 priority 110
+ standby 2 preempt
+!
+interface Vlan300
+ mac-address 00e0.b02b.3803
+ ip address 172.16.3.2 255.255.255.0
+ ip helper-address 10.0.0.10
+ standby 3 ip 172.16.3.1
+ standby 3 priority 110
+ standby 3 preempt
+!
+router ospf 1
+ log-adjacency-changes
+ passive-interface Vlan100
+ passive-interface Vlan200
+ passive-interface Vlan300
+ auto-cost reference-bandwidth 10000
+ network 172.16.1.2 0.0.0.0 area 0
+ network 172.16.2.2 0.0.0.0 area 0
+ network 172.16.3.2 0.0.0.0 area 0
+ network 10.1.1.1 0.0.0.0 area 0
+ network 10.2.2.1 0.0.0.0 area 0
+!
+ip classless
+!
+ip flow-export version 9
+!
+!
+!
+!
+!
+!
+!
+!
+line con 0
+!
+line aux 0
+!
+line vty 0 4
+ login
+!
+!
+!
+!
+end
+
